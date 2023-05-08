@@ -12,6 +12,8 @@ flask-restful = "*"
 flask-cors = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
+replicate = "*"
+pillow = "*"
 
 [dev-packages]
 
