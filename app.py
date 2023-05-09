@@ -1,5 +1,4 @@
 import os
-import requests
 from flask import Flask, jsonify, make_response, request, session
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
@@ -8,7 +7,6 @@ from flask_restful import Api, Resource
 from config import *
 from models import db, User, Favorite, Visualizer, ColorPalette, Song
 
-import base64
 import replicate
 from PIL import Image
 import urllib, urllib.request
