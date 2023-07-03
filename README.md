@@ -1,6 +1,6 @@
 # Audiofeel
 
-Introducing an audio-visual journal platform. Record or upload audio journals, and AI generates a color palette for the visual object corresponding to your entry. 
+Introducing an audio-visual journal platform. Record or upload audio journals, and AI generates a color palette for the visual object corresponding to your entry. \
 ![audiofeel](https://github.com/ghobbs03/song_visualizer/assets/35367152/25b9bca4-2ff9-4807-b559-ed85a99f306e)
 
 ## Tech Stack + Tools
