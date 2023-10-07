@@ -8,8 +8,8 @@ from config import *
 from models import db, User, Favorite, Visualizer, ColorPalette, Song
 
 import openai
-import base64
-import replicate
+openai.api_key = os.getenv('OPENAI_KEY')
+
 from PIL import Image
 import urllib, urllib.request
 
