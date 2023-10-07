@@ -78,7 +78,7 @@ function Entries({ user, favorites, handleFavorite }) {
 
     caller();
 
-    const date = new Date(visualizer.created_at + " UTC");
+    const date = new Date(visualizer.created_at.replace(/\s/, "T") + "Z");
 
     return (
       <div key={index} className="card">

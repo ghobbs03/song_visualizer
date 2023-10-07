@@ -77,7 +77,7 @@ function AudioAnalyzer({ url, visualizerPalette }) {
         ref={audioRef}
         crossOrigin={"anonymous"}
         onPlay={() => checkAudioContext()}
-        src={url}
+        src={url.substring(0, url.length - 4) + "mp4"}
         controls
       />
       <Canvas style={{ height: "230px", borderRadius: "20px" }}>
