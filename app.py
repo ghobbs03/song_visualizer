@@ -8,7 +8,7 @@ from config import *
 from models import db, User, Favorite, Visualizer, ColorPalette, Song
 
 import openai
-openai.api_key = os.getenv('OPENAI_KEY')
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 from PIL import Image
 import urllib, urllib.request
