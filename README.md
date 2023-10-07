@@ -7,9 +7,13 @@ Audio-visual journal logs - creates audio visualizer with unique theme based fro
 
 A user can do all of the following:
 Record or Upload Audio
+
 Record a 10-second clip, or upload an MP3 file. That is added to a user’s journal entries with time stamps.
-Enter a prompt to accompany that audio
+
+Enter a prompt to accompany that audio.
+
 Chat GPT API works behind the scenes to generate color palettes.
+
 Bookmark journal entries
 
 
