@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
-app.config['REPLICATE_API_TOKEN']= 'r8_4KHfVNmzoBzVXHOMNZEcaqAeLk6bgZf3BW3jO'
+app.config['OPENAI_API_KEY'] = os.environ.get('OPENAI_KEY')
 
 app.secret_key = b'~`25<q\x84-\xa9t\xb5\xc4WX\xafB'
 metadata = MetaData(naming_convention={

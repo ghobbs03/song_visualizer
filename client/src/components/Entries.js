@@ -1,72 +1,123 @@
-import React from "react";
-import NavBar from "./NavBar";
-import { Canvas } from '@react-three/fiber';
-import Visualizer from "./Visualizer";
+import React, { useState } from "react";
 import AudioAnalyzer from "./AudioAnalyzer";
-import { useState } from "react";
-
+import { useLocation } from "react-router-dom";
 
 function Entries({ user, favorites, handleFavorite }) {
-    
-    let visualizers = [...user.visualizers].reverse();
+  const location = useLocation();
+  let visualizers = [...user.visualizers].reverse();
 
-    if (favorites) {
-        visualizers = [...user?.visualizers].reverse().filter((visualizer) => {
-            const found = [...user?.favorites].find((favorite) => favorite.visualizer_id === visualizer.id) 
-            if (found) {
-                return true
-            } else {
-                return false
-            }
-        })
+  if (favorites) {
+    visualizers = [...user?.visualizers].reverse().filter((visualizer) => {
+      const found = [...user?.favorites].find(
+        (favorite) => favorite.visualizer_id === visualizer.id
+      );
+      if (found) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
 
+  function toggleBookmark(event, visualizer_id) {
+    console.log(event.target);
+    if (event.target.className === "bookmark outline icon") {
+      event.target.className = "bookmark icon";
+    } else {
+      event.target.className = "bookmark outline icon";
     }
 
-    function toggleBookmark(event, visualizer_id) {
-        if (event.target.className === "bookmark outline icon") {
-            event.target.className = "bookmark icon";
+    handleFavorite(visualizer_id);
 
-        } else {
-            event.target.className = "bookmark outline icon"
-        }
+    if (location.pathname === "/bookmarks") {
+      setTimeout(() => {
+        event.target.className = "bookmark icon";
+      }, 1500);
+    }
+  }
 
-        handleFavorite(visualizer_id);
+  function getFormattedDate(date) {
+    const year = date.getFullYear();
+    const month = (1 + date.getMonth()).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    const time =
+      date.getHours().toString().padStart(2, "0") +
+      ":" +
+      date.getMinutes().toString().padStart(2, "0");
+
+    return month + "." + day + "." + year + " " + time;
+  }
+
+  const entries = visualizers.map((visualizer, index) => {
+    const url = `https://twinword-word-associations-v1.p.rapidapi.com/associations/?entry=${visualizer.name}`;
+    const options = {
+      method: "GET",
+      headers: {
+        "X-RapidAPI-Key": "a8d8f40455mshaa5436a9a55a50fp15d66ejsn6ce9b545dd9a",
+        "X-RapidAPI-Host": "twinword-word-associations-v1.p.rapidapi.com",
+      },
+    };
+
+    async function getJSON() {
+      return fetch(url, options)
+        .then((resp) => resp.json())
+        .then((obj) => {
+          //const tags = [];
+          //console.log(obj.associations_array);
+          //console.log(obj.associations_scored);
+          const found = Math.max(Object.values(obj.associations_scored));
+          //console.log(Object.values(obj.associations_scored));
+
+          //tags.push(found ? found : obj.associations_array.slice(-1)[0]);
+          //console.log(tags);
+        });
     }
 
-
-    function getFormattedDate(date) {
-        const year = date.getFullYear();
-        const month = (1 + date.getMonth()).toString().padStart(2, '0');
-        const day = date.getDate().toString().padStart(2, '0');
-        const time = date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0')
-
-        return month + '.' + day + '.' + year + ' ' + time;
+    async function caller() {
+      await getJSON(); // command waits until completion
     }
 
-    const entries = visualizers.map((visualizer, index) => {
-        const date = new Date(visualizer.created_at)
+    caller();
 
-        return (<div key={index} className="card">
-            <div key={index} className="content">
-                <div id="canvas">
-                    <p>{visualizer.name}. <br />{getFormattedDate(date)} <i className={[...user?.favorites].find((favorite) => favorite.visualizer_id  === visualizer.id) ? "bookmark icon" : "bookmark outline icon" } onClick={(event) => toggleBookmark(event, visualizer.id)}></i></p>
-                    <AudioAnalyzer url={visualizer.song.url} visualizerPalette={visualizer.palette} />
-                </div>
-
-            </div>
-
-
-        </div>)
-    })
-
+    const date = new Date(visualizer.created_at + " UTC");
 
     return (
-            <div id="cards-container">
-                <div id="column" className="ui three stackable cards">
-                    {entries}
-                </div>
-            </div>
-        )
+      <div key={index} className="card">
+        <div key={index} className="content">
+          <div id="canvas">
+            <p>
+              {visualizer.name}. <br />
+              {getFormattedDate(date)}{" "}
+              <i
+                className={
+                  [...user?.favorites].find(
+                    (favorite) => favorite.visualizer_id === visualizer.id
+                  )
+                    ? "bookmark icon"
+                    : "bookmark outline icon"
+                }
+                onClick={(event) => toggleBookmark(event, visualizer.id)}
+              ></i>
+              <br />
+              {}
+            </p>
+            <AudioAnalyzer
+              url={visualizer.song.url}
+              visualizerPalette={visualizer.palette}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  });
+
+  return (
+    <div id="cards-container">
+      <div id="column" className="ui three stackable cards">
+        {entries}
+      </div>
+    </div>
+  );
 }
 
 export default Entries;
