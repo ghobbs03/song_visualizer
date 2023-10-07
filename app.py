@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, make_response, request, session
+from flask import Flask, jsonify, make_response, request, session, render_template
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 
@@ -12,6 +12,10 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 
 from PIL import Image
 import urllib, urllib.request
+
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("index.html")
 
 class Palettes(Resource):
     def get(self):
@@ -201,6 +205,7 @@ class Logout(Resource):
             session['user_id'] = None
             return {}, 204
         return {'error': '401 Unauthorized'}, 401
+    
 
 api.add_resource(UserByID, '/users/<int:id>')
 api.add_resource(Signup, '/signup')
