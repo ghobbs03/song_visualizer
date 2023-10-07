@@ -73,10 +73,12 @@ function AudioAnalyzer({ url, visualizerPalette }) {
   return (
     <div>
       <audio
+        preload="auto"
         className="entries_audio"
         ref={audioRef}
         crossOrigin={"anonymous"}
         onPlay={() => checkAudioContext()}
+        onClick={() => checkAudioContext()}
         src={url.substring(0, url.length - 4) + "mp4"}
         controls
       />
