@@ -86,6 +86,7 @@ function Visualizer({ visualizerPalette, loudness, chromaIndex }) {
         setColor2Index(index);
       }
     }
+    // eslint-disable-next-line
   }, [chromaIndex]);
 
   return (

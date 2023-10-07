@@ -2,7 +2,7 @@
   "name": "audiofeel",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8000",
+  "proxy": "http://localhost:5555",
   "dependencies": {
     "@react-three/drei": "^9.66.1",
     "@react-three/fiber": "^8.13.0",

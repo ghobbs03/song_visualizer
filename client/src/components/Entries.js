@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import AudioAnalyzer from "./AudioAnalyzer";
 import { useLocation } from "react-router-dom";
 
@@ -65,9 +65,8 @@ function Entries({ user, favorites, handleFavorite }) {
           //const tags = [];
           //console.log(obj.associations_array);
           //console.log(obj.associations_scored);
-          const found = Math.max(Object.values(obj.associations_scored));
+          //const found = Math.max(Object.values(obj.associations_scored));
           //console.log(Object.values(obj.associations_scored));
-
           //tags.push(found ? found : obj.associations_array.slice(-1)[0]);
           //console.log(tags);
         });

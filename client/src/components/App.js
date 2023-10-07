@@ -35,6 +35,7 @@ function App() {
         }
       }
     });
+    // eslint-disable-next-line
   }, []);
 
   async function handleUrlType(url) {
