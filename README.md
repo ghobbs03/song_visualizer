@@ -18,7 +18,7 @@ Chat GPT API works behind the scenes to generate color palettes.
 Bookmark journal entries
 
 
-[Link to Demo] (https://drive.google.com/file/d/1ze-LyNpez8CxH6UAGrW_qEPT4tVkicr2/view)
+[Link to Demo](https://drive.google.com/file/d/1ze-LyNpez8CxH6UAGrW_qEPT4tVkicr2/view)
 
 # To run
 ```
