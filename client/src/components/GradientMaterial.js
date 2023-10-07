@@ -1,38 +1,16 @@
 import * as THREE from "three";
 import { shaderMaterial } from "@react-three/drei";
 
-/*  export const GradientMaterial = shaderMaterial(
-    { color1: new THREE.Color("red"), color2: new THREE.Color("purple") },
-    `
-    varying vec2 vUv;
-  
-    void main() {
-    vUv = uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-    }`,
-    `
-    uniform vec3 color1;
-    uniform vec3 color2;
-  
-    varying vec2 vUv;
-  
-    void main() {
-    
-      gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
-    }`
-  )
- */
-  const settings = {
-    speed: 0.2,
-    density: 1.5,
-    strength: 0.2,
-    frequency: 3.0,
-    amplitude: 6.0,
-    intensity: 7.0
-  };
+const settings = {
+  speed: 0.2,
+  density: 1.5,
+  strength: 0.2,
+  frequency: 3.0,
+  amplitude: 6.0,
+  intensity: 7.0,
+};
 
-
-  const noise = `
+const noise = `
   // GLSL textureless classic 3D noise "cnoise",
   // with an RSL-style periodic variant "pnoise".
   // Author:  Stefan Gustavson (stefan.gustavson@liu.se)
@@ -210,19 +188,19 @@ void main() {
 }  
 `;
 
-  export const GradientMaterial = shaderMaterial(
-    { 
-      uTime: 0,
-      uSpeed: settings.speed,
-      uNoiseDensity: settings.density,
-      uNoiseStrength: settings.strength,
-      uFrequency: settings.frequency,
-      uAmplitude: settings.amplitude,
-      uIntensity: settings.intensity,
-      color1: new THREE.Color("rgb(186, 5, 247)"),
-      color2: new THREE.Color("rgb(100, 72, 174)"),
-      color3: new THREE.Color("rgb(232, 174, 135)")
-    },
-    vertexShader,
-    fragmentShader
-  )
+export const GradientMaterial = shaderMaterial(
+  {
+    uTime: 0,
+    uSpeed: settings.speed,
+    uNoiseDensity: settings.density,
+    uNoiseStrength: settings.strength,
+    uFrequency: settings.frequency,
+    uAmplitude: settings.amplitude,
+    uIntensity: settings.intensity,
+    color1: new THREE.Color("rgb(186, 5, 247)"),
+    color2: new THREE.Color("rgb(100, 72, 174)"),
+    color3: new THREE.Color("rgb(232, 174, 135)"),
+  },
+  vertexShader,
+  fragmentShader
+);

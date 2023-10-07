@@ -7,6 +7,8 @@ from flask_restful import Api, Resource
 from config import *
 from models import db, User, Favorite, Visualizer, ColorPalette, Song
 
+import openai
+import base64
 import replicate
 from PIL import Image
 import urllib, urllib.request
@@ -128,27 +130,14 @@ class VisualizerCreation(Resource):
 
         song_id = Song.query.filter(Song.url == sound_url).first().id
 
-        #app.config['REPLICATE_API_TOKEN']= 'r8_4KHfVNmzoBzVXHOMNZEcaqAeLk6bgZf3BW3jO'
-        output_colors = replicate.run(
-        "dribnet/homage1:89c84253ba11b0b7871e9d7da444d5160e1e32cd1567a01fca66ab60b587abd0",
-        input={"prompt": f'{feeling}'})
+        resp = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "assistant", "content": f'Generate a 6-color color palette based on the prompt "{feeling}" in format rgb() '}
+        ])
 
-        palettes = []
-        for color in output_colors:
-            print(color)
-            palettes.append(color)
+        output_colors = resp.choices[0].message.content
 
-            if (len(palettes) == 10):
-                break
-
-        urllib.request.urlretrieve(palettes[-1], "chosen_palette.png")
-
-        img = Image.open("chosen_palette.png")
-        max_colors = 6
-        tup_list = img.getcolors(max_colors)
-        print(tup_list)
-
-        colors_str = '+'.join('rgb'+str(tup[-1]) for tup in tup_list)
+        colors_str = output_colors.replace("\n", "+")
 
         new_palette = ColorPalette(colors=colors_str)
         db.session.add(new_palette)
@@ -159,7 +148,6 @@ class VisualizerCreation(Resource):
         user.visualizers.append(new_visualizer)
         db.session.commit()
         
-        print(palettes[-1])
         return make_response(new_visualizer.to_dict(), 201)
     
 
