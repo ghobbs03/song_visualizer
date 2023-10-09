@@ -65,7 +65,8 @@ function AudioUpload({ user, handleJournalSubmit }) {
           const stop = () => {
             return new Promise((resolve) => {
               mediaRecorder.addEventListener("stop", () => {
-                const audioBlob = new Blob(audioChunks);
+                const audioBlob = new Blob(audioChunks, { type: "audio/mp3" });
+                console.log("TYPE: ", audioBlob.type);
                 const audioUrl = URL.createObjectURL(audioBlob);
                 const audio = new Audio(audioUrl);
                 const play = () => {
@@ -95,7 +96,6 @@ function AudioUpload({ user, handleJournalSubmit }) {
         setRecordingState(audio);
         setIsRecording(false);
         setSoundUrl(audio.audioUrl);
-        console.log(audio.audioUrl);
       }, 10000);
     })();
   }
@@ -144,6 +144,7 @@ function AudioUpload({ user, handleJournalSubmit }) {
             {recordingState !== "" && isOneHidden === true && (
               <audio
                 id="recordedaudio"
+                crossOrigin={"anonymous"}
                 src={recordingState.audioUrl}
                 controls
               />
