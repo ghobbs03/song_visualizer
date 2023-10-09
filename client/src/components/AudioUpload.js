@@ -66,7 +66,6 @@ function AudioUpload({ user, handleJournalSubmit }) {
             return new Promise((resolve) => {
               mediaRecorder.addEventListener("stop", () => {
                 const audioBlob = new Blob(audioChunks, { type: "audio/mp3" });
-                console.log("TYPE: ", audioBlob.type);
                 const audioUrl = URL.createObjectURL(audioBlob);
                 const audio = new Audio(audioUrl);
                 const play = () => {
